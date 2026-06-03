@@ -1,0 +1,11 @@
+{
+  "sehir": "Afyonkarahisar",
+  "enlem": 38.6852729,
+  "boylam": 30.6427411,
+  "kaynak": "NASA POWER API (RE Community)",
+  "son_5_yil_aylik_ort_sicaklik_C": 11.59,
+  "son_5_yil_aylik_min_sicaklik_C": -2.14,
+  "son_5_yil_aylik_ort_yagis_mm": 1.2,
+  "kuraklik_risk_skoru": "YÜKSEK",
+  "analiz_tarihi": "2026-05-21"
+}

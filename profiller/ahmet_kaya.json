@@ -1,0 +1,44 @@
+{
+  "kullanici_id": "ahmet_kaya",
+  "kayit_tarihi": "2026-05-23",
+  "konum": "Konya, Karatay, saraçoğlu mahallesi",
+  "ekili_urunler": [
+    {
+      "urun_adi": "buğday",
+      "dekar": 40
+    }
+  ],
+  "son_soru": "Geldik hasat zamanına. Hedef rekolteyi tam bilemiyorum, Konya kuru tarım ortalamasını rehberden sen çek. TMO/TÜRİB baz fiyatı üzerinden, Karatay'dan Konya merkez borsasına gidişteki nakliye ve fire kesintilerini de (Lojistik) düş. Bana geçmişten bugüne yaptığım tüm masrafları çıkararak net bir kâr/zarar reçetesi yaz. Durumumuz nedir?",
+  "son_tavsiye_ozeti": "🌾 Karatay, Saraçoğlu | 23 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Kök toprak nemi %46, yüzey nemi %40 ile traktör girişi uygun olsa da, NDVI 0.299 ile bitki sağlığı kritik düşük ve orta",
+  "son_islem_tarihi": "2026-05-23 23:27",
+  "finansal_bakiye": 0.0,
+  "toplam_maliyet": 9000.0,
+  "toplam_gelir": 0.0,
+  "gecmis_sorular": [
+    {
+      "tarih": "2026-05-23 23:10",
+      "soru": "Selamün aleyküm. Karatay'daki 40 dekarlık tarlama buğday ekeceğim. İç Anadolu'da beklenen kuraklık riskine karşı toprağın alt kök nem durumu (GWETPROF) şu an nasıl? Ekim için güvenli bir dönemde miyiz?",
+      "ozet": "🌾 Karatay, Saraçoğlu Mahallesi | 23 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Kök bölgesi nemi %46, yüzey nemi %40; kritik eşiğin üstünde"
+    },
+    {
+      "tarih": "2026-05-23 23:15",
+      "soru": "Tohumları aldık, traktörle tarlayı sürdüm ve ekimi tamamladım. Yukarıdaki panele tohum ve mazot masraflarımı girdim, bu harcamalarla hesabımı başlat. Önümüzdeki hafta için yağış veya don riski var mı, hava ajanına sorar mısın?",
+      "ozet": "🌾 ve diğerleri.\n*   Nakliye firesi düşülmüş fiyat ve net kâr projeksiyonu dahil: Evet, \"revize yerel fiyat\" ve \"net kâr potansiyeliniz\" belirtildi.\n\nH"
+    },
+    {
+      "tarih": "2026-05-23 23:22",
+      "soru": "Kardeşlenme dönemi geldi, üst gübresi atacağım. Sadece güncel gübre masrafımı sisteme 'yeni harcama' olarak girdim. Eski masraflarımla toplayıp toplamda ne kadar içeride olduğumu (profilimden okuyarak) bana söyler misin? Bir de gübreyi atmak için yarın rüzgar durumu uygun mu?",
+      "ozet": "🌾 Karatay, Saraçoğlu | 23 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Tarlanızda buğday bitkileri ciddi stres altında (NDVI 0.22) ve toprak"
+    },
+    {
+      "tarih": "2026-05-23 23:24",
+      "soru": "Havalar ısındı ve nem arttı. Karatay şartlarında rehberine göre 'Sarı Pas' hastalığı riski var mı? Traktörle tarlaya girmek için yüzey nemi (GWETTOP) uygun mu? Koruyucu ilaç masrafını da girdim, toplam maliyetimi güncelle.",
+      "ozet": "🌾 Karatay, Saraçoğlu | 23 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Havaların ısınması ve artan nem, tarlanızda Sarı Pas riskini yükselti"
+    },
+    {
+      "tarih": "2026-05-23 23:27",
+      "soru": "Geldik hasat zamanına. Hedef rekolteyi tam bilemiyorum, Konya kuru tarım ortalamasını rehberden sen çek. TMO/TÜRİB baz fiyatı üzerinden, Karatay'dan Konya merkez borsasına gidişteki nakliye ve fire kesintilerini de (Lojistik) düş. Bana geçmişten bugüne yaptığım tüm masrafları çıkararak net bir kâr/zarar reçetesi yaz. Durumumuz nedir?",
+      "ozet": "🌾 Karatay, Saraçoğlu | 23 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Kök toprak nemi %46, yüzey nemi %40 ile traktör girişi uygun olsa da,"
+    }
+  ]
+}

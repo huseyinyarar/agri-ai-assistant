@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  agroaskai:
+    build: .
+    container_name: agroask_asistan
+    env_file:
+      - .env
+    volumes:
+      # RAG (ChromaDB) verilerinin konteyner yeniden başlasa da silinmemesi için disk bağlantısı (bind mount)
+      - .:/app  
+    # Python uygulamasında (main.py) kullanıcıdan input() komutuyla veri alınabilmesi için TTY zorunludur.
+    stdin_open: true  
+    tty: true

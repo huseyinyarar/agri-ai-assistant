@@ -1,0 +1,26 @@
+{
+  "fiyatlar": {
+    "buğday": {
+      "TMO_taban_fiyat_TL_kg": 9.85,
+      "serbest_piyasa_TL_kg": 10.2,
+      "bölge": "İç Anadolu",
+      "geçerlilik": "2026-05-21",
+      "kaynak": "TMO 2025 Taban Fiyat Simülasyonu"
+    },
+    "mısır": {
+      "TMO_taban_fiyat_TL_kg": 8.4,
+      "serbest_piyasa_TL_kg": 8.9,
+      "bölge": "İç Anadolu",
+      "geçerlilik": "2026-05-21",
+      "kaynak": "TMO 2025 Taban Fiyat Simülasyonu"
+    },
+    "arpa": {
+      "TMO_taban_fiyat_TL_kg": 7.6,
+      "serbest_piyasa_TL_kg": 7.95,
+      "bölge": "İç Anadolu",
+      "geçerlilik": "2026-05-21",
+      "kaynak": "TMO 2025 Taban Fiyat Simülasyonu"
+    }
+  },
+  "tarih": "2026-05-21"
+}

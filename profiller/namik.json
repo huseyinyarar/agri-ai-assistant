@@ -1,0 +1,34 @@
+{
+  "kullanici_id": "namik",
+  "kayit_tarihi": "2026-05-23",
+  "konum": "ankara, polatlı",
+  "ekili_urunler": [
+    {
+      "urun_adi": "buğday",
+      "dekar": 120
+    }
+  ],
+  "son_soru": "Peki şu ana kadar yaptığım toplam masraf (tohum, gübre ve mazot) tam olarak kaç TL oldu? Önümüzdeki hafta Karapınar'da yağış beklemiyorsak, damlama sulama kurmalı mıyım yoksa beklemeli miyim? Bana 2 maddelik net bir aksiyon planı ver.",
+  "son_tavsiye_ozeti": "🌾 Karapınar | 24 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Karapınar'daki mısır tarlanızın kök bölgesi nemi %50 olup, bitki sağlığı (NDVI 0.653) şu an için sağlıklı görünüyor. Mevcut nem ",
+  "son_islem_tarihi": "2026-05-24 00:09",
+  "finansal_bakiye": 0.0,
+  "toplam_maliyet": 40000.0,
+  "toplam_gelir": 0.0,
+  "gecmis_sorular": [
+    {
+      "tarih": "2026-05-23 23:57",
+      "soru": "Selam, Ankara Polatlı'da 120 dekarlık tarlamda buğday yetiştiriyorum. Bugün tarlayı gezerken yapraklarda sarı-turuncu renkte, çizgi şeklinde lekeler (Sarı Pas) gördüm. Bu hastalığın tarım rehberindeki ilerleme hızı ve riski nedir? Yukarıdaki masraflarımı da hesaba katarak zararımın ne boyutta olabileceğini analiz et.",
+      "ozet": "🌾 Polatlı | 23 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Tarlanızda kök bölgesi nemi %52, yüzey nemi %46 ile yeterli seviyede; anlık kura"
+    },
+    {
+      "tarih": "2026-05-24 00:01",
+      "soru": "Ankara'daki buğdayları kurtardık diyelim. Bir de Konya Karapınar'da 60 dekarlık bir tarlam daha var, oraya Mısır ektim. Karapınar'daki mevcut toprak nemi (NASA verisi) mısır gelişimi için yeterli mi? Tarım rehberine göre mısırda kuraklık stresi hangi dönemde en tehlikelidir? Panoya yeni mazot masrafımı da girdim, kümülatif bütçemi mısırın TMO fiyatına göre tekrar hesapla.",
+      "ozet": "🌾 Karapınar | 24 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Karapınar'da mısır tarlanızın kök bölgesi nemi %50, yüzey nemi %45 ile şu an y"
+    },
+    {
+      "tarih": "2026-05-24 00:09",
+      "soru": "Peki şu ana kadar yaptığım toplam masraf (tohum, gübre ve mazot) tam olarak kaç TL oldu? Önümüzdeki hafta Karapınar'da yağış beklemiyorsak, damlama sulama kurmalı mıyım yoksa beklemeli miyim? Bana 2 maddelik net bir aksiyon planı ver.",
+      "ozet": "🌾 Karapınar | 24 Mayıs 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Karapınar'daki mısır tarlanızın kök bölgesi nemi %50 olup, bitki sağlığı (NDVI"
+    }
+  ]
+}

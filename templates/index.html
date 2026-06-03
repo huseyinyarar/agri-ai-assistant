@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroAskAI | Premium Otonom Tarım Asistanı</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-hover: #059669;
+            --primary-glow: rgba(16, 185, 129, 0.4);
+            --secondary: #3b82f6;
+            --bg-base: #020617;
+            --bg-surface: #0f172a;
+            --bg-card: rgba(15, 23, 42, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-base);
+            /* Background image with a dark overlay */
+            background-image: linear-gradient(rgba(2, 6, 23, 0.8), rgba(2, 6, 23, 0.9)), url('/static/bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--bg-card);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255,255,255,0.05) inset;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Header / Title */
+        .header { text-align: center; margin-bottom: 3rem; }
+        .header h1 { font-family: 'Outfit', sans-serif; font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #34d399 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.5rem; letter-spacing: -1px; }
+        .header p { color: var(--text-muted); font-size: 1.1rem; font-weight: 400; letter-spacing: 0.5px; }
+
+        /* Grid Layout */
+        .form-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 2rem; align-items: start; }
+        @media (max-width: 768px) { .form-layout { grid-template-columns: 1fr; gap: 1.5rem; } }
+
+        /* Section Cards */
+        .section-card { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; transition: all 0.3s ease; }
+        .section-card:hover { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 255, 255, 0.15); }
+        .section-title { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600; color: #e2e8f0; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px; justify-content: space-between; }
+        .section-title i { color: var(--primary); }
+        
+        .edit-btn { background: rgba(255,255,255,0.1); border: none; color: white; padding: 5px 10px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; transition: 0.3s; }
+        .edit-btn:hover { background: var(--primary); }
+
+        /* Inputs */
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group:last-child { margin-bottom: 0; }
+        label { display: block; margin-bottom: 0.4rem; font-size: 0.85rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        input, textarea { width: 100%; background: rgba(0, 0, 0, 0.3); border: 1px solid var(--border-color); border-radius: 10px; padding: 0.85rem 1rem; color: var(--text-main); font-family: 'Inter', sans-serif; font-size: 1rem; transition: all 0.3s ease; }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); background: rgba(0, 0, 0, 0.5); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        .cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .input-icon-wrapper { position: relative; }
+        .input-icon-wrapper input { padding-left: 2.2rem; }
+        .input-icon-wrapper i { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); font-size: 0.9rem; }
+
+        /* Dynamic Crop List */
+        .crop-item { display: flex; gap: 10px; margin-bottom: 10px; }
+        .crop-item input { flex: 1; }
+        .crop-item .dekar-input { width: 100px; flex: none; }
+        .remove-btn { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 0 15px; cursor: pointer; transition: 0.3s; }
+        .remove-btn:hover { background: #ef4444; color: white; }
+        .add-btn { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px dashed rgba(59, 130, 246, 0.4); border-radius: 8px; padding: 10px; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 5px; font-weight: 500; }
+        .add-btn:hover { background: rgba(59, 130, 246, 0.4); border-style: solid; }
+
+        /* Profile Dashboard Card */
+        #profileDashboard { display: none; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; }
+        .stat-box { background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .stat-box.highlight { border-color: rgba(16, 185, 129, 0.3); }
+        .stat-value { font-size: 1.5rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: white; margin-top: 5px; }
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
+
+        /* Button */
+        button.btn-primary { background: linear-gradient(135deg, var(--primary) 0%, #047857 100%); color: white; border: none; padding: 1.2rem 2rem; border-radius: 12px; font-size: 1.15rem; font-weight: 600; font-family: 'Outfit', sans-serif; cursor: pointer; width: 100%; transition: all 0.3s; display: flex; justify-content: center; align-items: center; gap: 10px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
+        button.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); }
+        
+        /* Loading & Results */
+        .loading-container { display: none; margin-top: 2rem; text-align: center; padding: 2rem; background: rgba(15, 23, 42, 0.5); border-radius: 16px; border: 1px dashed rgba(16, 185, 129, 0.3); }
+        .loader { position: relative; width: 60px; height: 60px; margin: 0 auto 1.5rem; }
+        .loader-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; border-top-color: var(--primary); animation: spin 1.5s linear infinite; }
+        .loader-ring:nth-child(2) { width: 80%; height: 80%; top: 10%; left: 10%; border-top-color: var(--secondary); animation: spin-reverse 2s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+        .loading-text { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .loading-subtext { font-size: 0.9rem; color: var(--primary); height: 20px; transition: opacity 0.3s; }
+
+        .result-container { display: none; margin-top: 2.5rem; background: rgba(15, 23, 42, 0.8); border-radius: 20px; border: 1px solid rgba(16, 185, 129, 0.4); box-shadow: 0 10px 30px rgba(0,0,0,0.3); animation: slideUp 0.5s ease-out; }
+        .result-header { background: rgba(16, 185, 129, 0.1); padding: 1.5rem 2rem; border-bottom: 1px solid rgba(16, 185, 129, 0.2); display: flex; justify-content: space-between; align-items: center; }
+        .result-title { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 600; color: #34d399; margin: 0; }
+        .badge { background: rgba(59, 130, 246, 0.2); color: #93c5fd; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.85rem; border: 1px solid rgba(59, 130, 246, 0.3); }
+        .result-body { padding: 2rem; font-size: 1.05rem; line-height: 1.8; white-space: pre-wrap; }
+        .result-body.error-text { color: #fca5a5; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>AgroAskAI</h1>
+        <p>Gelişmiş Yapay Zeka Destekli Otonom Tarım Asistanınız</p>
+    </div>
+    
+    <div class="form-layout">
+        <!-- Sol Panel: Çiftçi & Arazi -->
+        <div class="section-card" id="profileCard">
+            <div class="section-title">
+                <span><i class="fa-solid fa-user-tractor"></i> Profil & Arazi</span>
+            </div>
+            
+            <!-- Dashboard (Hidden by default) -->
+            <div id="profileDashboard">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <h3 style="font-family: 'Outfit'; color: white;" id="dashName">Ahmet Kaya</h3>
+                    <button class="edit-btn" onclick="toggleProfileEdit()"><i class="fa-solid fa-pen"></i> Düzenle</button>
+                </div>
+                <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px;">
+                    <i class="fa-solid fa-location-dot"></i> <span id="dashLocation">Konya, Karatay</span>
+                </div>
+                <div style="font-size: 0.9rem; color: #93c5fd; margin-bottom: 15px;">
+                    <i class="fa-solid fa-seedling"></i> <span id="dashCrops">Buğday (40 dekar)</span>
+                </div>
+                
+                <div class="stat-grid">
+                    <div class="stat-box highlight">
+                        <div class="stat-label">Toplam Maliyet</div>
+                        <div class="stat-value" id="dashCost">0 ₺</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Bakiye Durumu</div>
+                        <div class="stat-value" id="dashBalance" style="color: #60a5fa;">0 ₺</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Form -->
+            <div id="profileEditForm">
+                <div class="form-group">
+                    <label for="kullanici_id">Çiftçi Kimliği / Telefon</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-regular fa-id-badge"></i>
+                        <input type="text" id="kullanici_id" placeholder="Örn: ahmet_kaya" value="ahmet_kaya" onblur="fetchProfile()">
+                    </div>
+                    <small style="color: var(--text-muted); font-size: 0.75rem; margin-top: 5px; display: block;">Kimliği girdiğinizde eski verileriniz otomatik yüklenecektir.</small>
+                </div>
+                
+                <div class="form-group">
+                    <label for="konum">Bölge / Tam Konum</label>
+                    <div class="input-icon-wrapper">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <input type="text" id="konum" placeholder="İl, İlçe, Köy" value="Konya, Karatay">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ekili Ürünler & Tarlalar</label>
+                    <div id="cropList">
+                        <div class="crop-item">
+                            <input type="text" class="crop-name" placeholder="Ürün Adı (Örn: Buğday)" value="buğday">
+                            <input type="number" class="dekar-input" placeholder="Dekar" value="40">
+                            <button class="remove-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                    </div>
+                    <button class="add-btn" onclick="addCropField()"><i class="fa-solid fa-plus"></i> Yeni Ürün/Tarla Ekle</button>
+                </div>
+                
+                <button class="edit-btn" style="width: 100%; margin-top: 15px; background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 1rem; padding: 10px;" onclick="toggleProfileEdit()">Kaydet & Küçült</button>
+            </div>
+        </div>
+        
+        <!-- Sağ Panel: ERP & Finans -->
+        <div class="section-card">
+            <h2 class="section-title"><i class="fa-solid fa-coins"></i> Yeni Girdi Maliyetleri (ERP)</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5;">
+                Sadece <strong>yeni yaptığınız</strong> harcamaları girin. Sistem eski maliyetlerinizin üzerine otomatik ekleyecektir.
+            </p>
+            <div class="cost-grid">
+                <div class="form-group">
+                    <label for="maliyet_tohum">Tohum (TL)</label>
+                    <input type="number" id="maliyet_tohum" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label for="maliyet_gubre">Gübre (TL)</label>
+                    <input type="number" id="maliyet_gubre" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label for="maliyet_mazot">Mazot (TL)</label>
+                    <input type="number" id="maliyet_mazot" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label for="maliyet_ilac">İlaç/Diğer (TL)</label>
+                    <input type="number" id="maliyet_ilac" placeholder="0">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Alt Panel: Soru -->
+    <div class="section-card" style="margin-bottom: 2rem;">
+        <h2 class="section-title"><i class="fa-regular fa-comment-dots"></i> Tarımsal Soru & Senaryo</h2>
+        <div class="form-group">
+            <textarea id="soru" placeholder="Karşılaştığınız sorunu veya sormak istediğiniz tarımsal senaryoyu detaylıca yazın...">İç Anadolu'da beklenen kuraklık riskine karşı tarlamı nasıl korumalıyım ve ürünümü ne zaman satmalıyım?</textarea>
+        </div>
+    </div>
+    
+    <button class="btn-primary" id="analyzeBtn" onclick="startAnalysis()">
+        <i class="fa-solid fa-microchip"></i> Otonom Analizi Başlat
+    </button>
+    
+    <!-- Yükleme Durumu -->
+    <div class="loading-container" id="loadingSection">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+        <div class="loading-text">Yapay Zeka Ajanları Çalışıyor</div>
+        <div class="loading-subtext" id="loadingText">Paralel veri çekimi başlatılıyor...</div>
+    </div>
+    
+    <!-- Sonuç Kartı -->
+    <div class="result-container" id="resultSection">
+        <div class="result-header">
+            <h3 class="result-title"><i class="fa-solid fa-clipboard-check"></i> Ziraat Mühendisi Reçetesi</h3>
+            <span class="badge" id="profileBadge"><i class="fa-regular fa-user"></i> Anonim</span>
+        </div>
+        <div class="result-body" id="resultContent"></div>
+    </div>
+</div>
+
+<script>
+    // Crop Management
+    function addCropField(name = "", dekar = "") {
+        const list = document.getElementById("cropList");
+        const div = document.createElement("div");
+        div.className = "crop-item";
+        div.innerHTML = `
+            <input type="text" class="crop-name" placeholder="Ürün Adı" value="${name}">
+            <input type="number" class="dekar-input" placeholder="Dekar" value="${dekar}">
+            <button class="remove-btn" onclick="this.parentElement.remove()"><i class="fa-solid fa-xmark"></i></button>
+        `;
+        list.appendChild(div);
+    }
+    
+    function getEkiliUrunler() {
+        const urunler = [];
+        document.querySelectorAll(".crop-item").forEach(item => {
+            const name = item.querySelector(".crop-name").value.trim();
+            const dekar = parseFloat(item.querySelector(".dekar-input").value) || 0;
+            if (name) urunler.push({ urun_adi: name, dekar: dekar });
+        });
+        return urunler;
+    }
+    
+    // UI Toggles
+    let isEditingProfile = true;
+    function toggleProfileEdit() {
+        isEditingProfile = !isEditingProfile;
+        document.getElementById("profileEditForm").style.display = isEditingProfile ? "block" : "none";
+        document.getElementById("profileDashboard").style.display = isEditingProfile ? "none" : "block";
+        
+        if (!isEditingProfile) {
+            // Update dashboard with form values
+            document.getElementById("dashName").textContent = document.getElementById("kullanici_id").value || "Anonim";
+            document.getElementById("dashLocation").textContent = document.getElementById("konum").value || "Belirtilmedi";
+            
+            const urunler = getEkiliUrunler();
+            if(urunler.length > 0) {
+                document.getElementById("dashCrops").innerHTML = urunler.map(u => `${u.urun_adi} (${u.dekar} dekar)`).join(", ");
+            } else {
+                document.getElementById("dashCrops").innerHTML = "Ürün girilmedi";
+            }
+        }
+    }
+    
+    // Fetch Profile Profile
+    async function fetchProfile() {
+        const id = document.getElementById("kullanici_id").value.trim();
+        if (!id) return;
+        
+        try {
+            const res = await fetch('/api/profile/' + encodeURIComponent(id));
+            if (res.ok) {
+                const data = await res.json();
+                if (data.kayit_tarihi) { // Existing profile
+                    if(data.konum) document.getElementById("konum").value = data.konum;
+                    
+                    // Update crops
+                    if(data.ekili_urunler && data.ekili_urunler.length > 0) {
+                        document.getElementById("cropList").innerHTML = "";
+                        data.ekili_urunler.forEach(u => addCropField(u.urun_adi, u.dekar));
+                    }
+                    
+                    // Update Dashboard Stats
+                    const formatter = new Intl.NumberFormat('tr-TR');
+                    document.getElementById("dashCost").textContent = formatter.format(data.toplam_maliyet || 0) + " ₺";
+                    document.getElementById("dashBalance").textContent = formatter.format(data.finansal_bakiye || 0) + " ₺";
+                    
+                    // Auto-collapse if it has data
+                    if(isEditingProfile) toggleProfileEdit();
+                }
+            }
+        } catch(e) { console.error("Profil çekilemedi:", e); }
+    }
+    
+    // Run fetch on load if ID exists
+    window.addEventListener("DOMContentLoaded", () => {
+        setTimeout(fetchProfile, 500);
+    });
+
+    // Loading UX
+    const loadingMessages = [
+        "🌐 NASA uydu verileri ve toprak nem oranları çekiliyor...",
+        "☁️ Canlı hava durumu ve don riski analiz ediliyor...",
+        "📑 TMO güncel borsa fiyatları RAG ile taranıyor...",
+        "🚚 Lojistik kesintileri ve nakliye fireleri hesaplanıyor...",
+        "🧠 Orkestratör tüm verileri sentezliyor, reçete hazırlanıyor..."
+    ];
+    let messageInterval;
+
+    async function startAnalysis() {
+        const kullanici_id = document.getElementById('kullanici_id').value.trim();
+        const konum = document.getElementById('konum').value.trim();
+        const soru = document.getElementById('soru').value.trim();
+        const ekili_urunler = getEkiliUrunler();
+        
+        const maliyetler = {
+            "Tohum": parseFloat(document.getElementById('maliyet_tohum').value) || 0,
+            "Gübre": parseFloat(document.getElementById('maliyet_gubre').value) || 0,
+            "Mazot": parseFloat(document.getElementById('maliyet_mazot').value) || 0,
+            "İlaç": parseFloat(document.getElementById('maliyet_ilac').value) || 0
+        };
+
+        const btn = document.getElementById('analyzeBtn');
+        const loading = document.getElementById('loadingSection');
+        const loadingText = document.getElementById('loadingText');
+        const resultSection = document.getElementById('resultSection');
+        const resultContent = document.getElementById('resultContent');
+        const profileBadge = document.getElementById('profileBadge');
+        
+        if(!soru) { alert('Lütfen bir tarımsal senaryo veya soru girin.'); return; }
+        
+        btn.style.display = 'none';
+        resultSection.style.display = 'none';
+        loading.style.display = 'block';
+        
+        let msgIndex = 0;
+        loadingText.textContent = loadingMessages[0];
+        messageInterval = setInterval(() => {
+            msgIndex = (msgIndex + 1) % loadingMessages.length;
+            loadingText.style.opacity = 0;
+            setTimeout(() => { loadingText.textContent = loadingMessages[msgIndex]; loadingText.style.opacity = 1; }, 300);
+        }, 3500);
+        
+        try {
+            const response = await fetch('/api/analyze', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ kullanici_id, konum, ekili_urunler, soru, maliyetler })
+            });
+            
+            const data = await response.json();
+            
+            if(response.ok) {
+                resultContent.textContent = data.result;
+                resultContent.className = "result-body"; 
+                profileBadge.innerHTML = `<i class="fa-regular fa-user"></i> ${data.kullanici_id || "Anonim"}`;
+                profileBadge.style.display = "inline-block";
+                
+                // Analiz sonrası maliyet inputlarını temizle ve profili güncelle
+                document.getElementById('maliyet_tohum').value = "";
+                document.getElementById('maliyet_gubre').value = "";
+                document.getElementById('maliyet_mazot').value = "";
+                document.getElementById('maliyet_ilac').value = "";
+                fetchProfile();
+            } else {
+                resultContent.textContent = "HATA: " + (data.error || "Bilinmeyen bir hata oluştu.");
+                resultContent.className = "result-body error-text";
+                profileBadge.style.display = "none";
+            }
+        } catch(e) {
+            resultContent.textContent = "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edin.\nDetay: " + e.message;
+            resultContent.className = "result-body error-text";
+            profileBadge.style.display = "none";
+        } finally {
+            clearInterval(messageInterval);
+            loading.style.display = 'none';
+            resultSection.style.display = 'block';
+            
+            btn.style.display = 'flex';
+            btn.innerHTML = '<i class="fa-solid fa-rotate-right"></i> Yeni Bir Analiz Yap';
+        }
+    }
+</script>
+</body>
+</html>

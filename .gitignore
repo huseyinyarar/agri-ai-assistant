@@ -1,0 +1,21 @@
+# Gizli anahtarlar - asla commit etme!
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Loglar
+*.log
+logs/
+
+# IDE
+.vscode/
+.idea/
+
+# Docker
+*.env.local

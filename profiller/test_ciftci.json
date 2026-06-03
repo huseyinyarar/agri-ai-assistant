@@ -1,0 +1,19 @@
+{
+  "kullanici_id": "test_ciftci",
+  "kayit_tarihi": "2026-05-22",
+  "konum": "Konya",
+  "mevcut_urun": "bugday",
+  "son_soru": "Konya da bugday ilaclama",
+  "son_tavsiye_ozeti": "Toprak nemi yeterli",
+  "son_islem_tarihi": "2026-05-22 17:36",
+  "finansal_bakiye": 0.0,
+  "toplam_maliyet": 0.0,
+  "toplam_gelir": 0.0,
+  "gecmis_sorular": [
+    {
+      "tarih": "2026-05-22 17:36",
+      "soru": "Konya da bugday ilaclama",
+      "ozet": "Toprak nemi yeterli"
+    }
+  ]
+}
