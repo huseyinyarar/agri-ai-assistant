@@ -12,9 +12,10 @@ Tarım sektörü, küresel iklim değişikliğine bağlı olarak artan kuraklık
 Bu projenin temel mimarisi, literatürdeki **"agri-ai-assistant: A Multi-Agentic AI Framework for Supporting Smallholder Farmers’ Enquiries Globally" (Cantonjos ve Biswas, 2025 - arXiv:2512.14910)** başlıklı çalışmaya dayanmaktadır. 
 
 İlgili makale, tekil bir yapay zeka modelinin (örn. salt ChatGPT) tarım gibi kritik alanlarda yetersiz kalacağını savunarak "Çoklu Ajan (Multi-Agent)" mimarisini önermektedir. Bu projede, referans alınan mimariye uygun olarak sistem bağımsız, uzmanlaşmış ajanlara bölünmüştür:
-1. **İklim ve Toprak Ajanı (Weather History/Forecast):** Uzaktan algılama (Remote Sensing) araçlarıyla geçmiş ve gelecek iklim/nem verilerini harmanlar.
-2. **Finans Ajanı (Solution Agent):** Kar-zarar projeksiyonlarını üretir.
-3. **Yönetici Ajan (Agent Manager & Reviewer):** Sistemin ürettiği çıktıların literatürle çelişip çelişmediğini kontrol ederek halüsinasyonu bloke eder.
+1. **İklim ve Toprak Ajanı (Climate & Soil Agent):** Uzaktan algılama (Remote Sensing) araçlarıyla geçmiş iklim ve toprak nemi verilerini analiz eder.
+2. **Hava Ajanı (Weather Agent):** Canlı meteorolojik tahminleri analiz ederek don, yağış ve saha operasyon pencerelerini belirler.
+3. **Finans Ajanı (Finance & Logistics Agent):** TMO fiyat bültenlerinden, güncel piyasa fiyatlarından ve lojistik/nakliye mesafelerinden yola çıkarak net kâr-zarar projeksiyonları üretir.
+4. **Orkestratör Ajan (Orchestrator & Reviewer):** Tüm uzman ajanlardan gelen verileri sentezleyerek kısa, net ve doğrudan eyleme dönüştürülebilir "Ziraat Mühendisi Reçetesi" sunar; halüsinasyonu filtreler.
 
 *(Bu alana agri-ai-assistant ajan mimarisini (Agent Manager, İklim, Finans ajanlarının şeması) veya ajanların terminalde sırayla çalıştığını gösteren bir log görüntüsü koyabilirsiniz)*
 > **[EKRAN GÖRÜNTÜSÜ 2: Terminalde Ajanların Birbirleriyle İletişim Kurduğu (Thought/Action) Çalışma Logları]**

@@ -46,17 +46,16 @@ def gorevleri_olustur(soru: str, konum: str = "", ekili_urunler: list | None = N
             f"Soru: '{soru}'\n\n"
             "=== GÖREV TALİMATI ===\n"
             "1. `get_coordinates_tool` ile tam adresin (il/ilçe/köy) nokta atışı enlem‑boylamını al.\n"
-            "2. `fetch_nasa_power_history_tool` ile sıcaklık (T2M), yağış (PRECTOTCORR), "
-            "kök‑toprak‑nem (GWETPROF) ve yüzey‑toprak‑nem (GWETTOP) verilerini çek.\n"
-            "3. Toprak nemi kritik eşikleri kontrol et: <30% ise 'Toprak nemi %X'e düşmüş, "
-            "acil sulama yapın' gibi nokta atışı uyarı üret. >50% ise 'yeterli' olarak raporla.\n"
+            "2. KESİN KURAL: `fetch_nasa_power_history_tool` aracını kullanarak sıcaklık (T2M), yağış (PRECTOTCORR), "
+            "kök‑toprak‑nem (GWETPROF) ve yüzey‑toprak‑nem (GWETTOP) verilerini ÇEKMEK ZORUNDASIN. Bu aracı kullanmadan ASLA devam etme!\n"
+            "3. Eğer NASA aracı başarıyla çalışırsa KESİNLİKLE 'NASA verilerine göre kök nemi %X, yüzey nemi %Y' yaz. Eğer araç HATA döndürürse, uydurma veri üretme ve sadece 'NASA HATA' aldığını raporda açıkça belirt.\n"
             "4. `fetch_ndvi_health_tool` ile bitki sağlığı indeksini (NDVI) kontrol et ve stres varsa raporla.\n"
             "5. Kullanıcı sorusunda 'Sarı Pas', 'Rastık' vb. spesifik bir hastalık/zararlı geçiyorsa MUHAKKAK `tarim_rehberinde_ara` aracını kullanarak riskleri rehberden oku.\n"
-            "6. Sonuç: Toprak nemi, hastalık/kuraklık riski, bitki sağlığı ve hava özetini üret."
+            "6. Sonuç: NASA kök/yüzey nem oranları (veya hata durumu), hastalık/kuraklık riski, NDVI bitki sağlığı ve hava özetini üret."
         ),
         expected_output=(
-            "Lokasyon için toprak‑nem (kök + yüzey %), NDVI bitki sağlığı durumu, "
-            "ortalama sıcaklık (°C) ve yağış (mm) değerleri, kuraklık riskinin kısa yorumu."
+            "NASA verilerine göre kök nemi %X, yüzey nemi %Y değerlerini (veya erişilemediyse NASA HATA mesajını), "
+            "NDVI bitki sağlığı durumunu, ortalama sıcaklık (°C) ve yağış (mm) değerlerini içeren kısa özet."
         ),
         agent=ajanlar["iklim_toprak"],
     )
@@ -158,21 +157,19 @@ def gorevleri_olustur(soru: str, konum: str = "", ekili_urunler: list | None = N
             f"{baglam_bloku}"
             f"{profil_kural}\n"
             "Önceki 3 ajanın (İklim/Toprak, Hava, Finans/Lojistik) analiz sonuçlarını sentezle.\n"
-            "ÇIKTI FORMATI (KATI KURAL: Bu şablonun dışına KESİNLİKLE çıkma, başına sonuna 'Her şey yolunda', 'İşte sonuç' gibi meta-yorumlar ASLA ekleme, PDF üretme):\n\n"
+            "ÇIKTI FORMATI (KATI KURAL: SADECE VE SADECE aşağıdaki şablonu doldurarak çıktı ver. "
+            "Şablonun dışına KESİNLİKLE çıkma! İngilizce meta-yorumlar, giriş veya kapanış ASLA ekleme!):\n\n"
             "🌾 [İlçe/Köy] | [Tarih]\n"
             "━━━━━━━━━━━━━━━━━━━━━━━━\n"
-            "🌡️ İKLİM & TOPRAK: [NASA toprak nemi ve kuraklık verisiyle nokta atışı durum, "
-            "NDVI bitki sağlığı bilgisi, varsa hastalık riski]\n"
+            "🌡️ İKLİM & TOPRAK: [Önceki ajanlardan gelen kök ve yüzey nemi oranlarını NASA verisi olarak yaz. Eğer ajan 'NASA HATA' uyarısı vermişse uydurma veri yerine 'NASA API kapalı, manuel kontrol edin' yaz, ardından NDVI bilgisini ekle]\n"
             "🌦️ HAVA: [Bu hafta tarla operasyonları için en güvenli günler, don/yağış riski]\n"
-            "💰 FİNANS & PİYASA: [Nakliye firesi düşülmüş revize yerel fiyat, (Eski+Yeni kümülatif maliyet) analizi, "
-            "varsayılan rekolte üzerinden net kâr/zarar projeksiyonu ve fenolojik evreye uygun vizyon/tavsiye]\n"
-            "✅ AKSİYON: [Hemen yapılması gereken 2 somut, eyleme dönüştürülebilir adım]\n\n"
-            "TOPLAM 5‑7 CÜMLE. Kısa, net, mobil‑okunabilir."
+            "💰 FİNANS & PİYASA: [Nakliye firesi düşülmüş revize yerel fiyat, kümülatif maliyet analizi, net kâr/zarar projeksiyonu]\n"
+            "✅ AKSİYON: [Hemen yapılması gereken 2 somut adım]\n\n"
+            "UYARI: SADECE yukarıdaki emojili metni üret, başına veya sonuna HİÇBİR ŞEY ekleme."
         ),
         expected_output=(
-            "Yukarıdaki formatta, emojili, 5‑7 cümlelik mobil‑okunabilir "
-            "'Ziraat Mühendisi Reçetesi'. Nakliye firesi düşülmüş fiyat ve "
-            "net kâr projeksiyonu dahil."
+            "KATI FORMAT: Kesinlikle ve sadece yukarıdaki 5 satırlık emojili şablon. "
+            "Hiçbir ek açıklama, İngilizce not, numaralandırma veya meta-yorum içermemeli."
         ),
         agent=ajanlar["orkestrator"],
         context=[iklim_gorevi, hava_gorevi, finans_gorevi],

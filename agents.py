@@ -57,7 +57,13 @@ def llm_olustur(temperature: float = 0.3) -> LLM:
             "GEMINI_API_KEY .env dosyasında bulunamadı! "
             "Lütfen .env dosyasına GEMINI_API_KEY=<anahtar> ekleyin."
         )
-    return LLM(model=MODEL_ADI, api_key=GEMINI_KEY, temperature=temperature)
+    return LLM(
+        model=MODEL_ADI,
+        api_key=GEMINI_KEY,
+        temperature=temperature,
+        timeout=120,
+        num_retries=5,
+    )
 
 # ----------------------------------------------------------------------
 # 1. ORKESTRATÖR – Ziraat Mühendisi (final reçete üretir)

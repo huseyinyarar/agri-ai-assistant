@@ -120,8 +120,18 @@ def fetch_nasa_power_history_tool(adres: str) -> str:
     }
     try:
         params = {**ortak, "parameters": "T2M,PRECTOTCORR,GWETPROF,GWETTOP", "community": "AG"}
-        r = requests.get(url, params=params, timeout=30)
-        r.raise_for_status()
+        import time
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                r = requests.get(url, params=params, timeout=30)
+                r.raise_for_status()
+                break
+            except requests.exceptions.RequestException as e:
+                if attempt == max_retries - 1:
+                    raise e
+                time.sleep(2) # 2 saniye bekle ve tekrar dene
+                
         data = r.json()
         prop = data.get("properties", {}).get("parameter", {})
         def _clean(vals):
@@ -142,8 +152,8 @@ def fetch_nasa_power_history_tool(adres: str) -> str:
         }
         _cache_yaz(adres, "nasa_iklim", ozet)
         return f"[NASA POWER ✅] {adres} iklim + toprak nemi:\n{json.dumps(ozet, ensure_ascii=False, indent=2)}"
-    except requests.exceptions.RequestException as e:
-        return f"[NASA HATA ⚠️] {adres} veri alınamadı: {e}"
+    except Exception as e:
+        return f"[NASA HATA ⚠️] NASA sunucularına şu an erişilemiyor. Lütfen ajana gerçek veri çekilemediğini dürüstçe belirt."
 
 # ----------------------------------------------------------------------
 # 2️⃣ Hava Durumu – OpenWeather (5‑gün)
@@ -241,31 +251,36 @@ def fetch_tmo_pdf_rag_tool(sorgu: str) -> str:
         import pdfplumber
         if pdf_path.exists():
             with pdfplumber.open(pdf_path) as pdf:
-                for sayfa in pdf.pages:
-                    txt = sayfa.extract_text() or ""
-                    for satir in txt.split("\n"):
-                        for u in ["Buğday","Mısır","Arpa","Çavdar","Tritikale"]:
-                            if u.lower() in satir.lower():
-                                fiyatlar[satir.strip()] = {"ham_satir": satir.strip(), "sayfa": sayfa.page_number}
+                txt_all = ""
+                for sayfa in pdf.pages[:3]: # Sadece ilk 3 sayfaya bak (fiyatlar genelde başta)
+                    txt_all += (sayfa.extract_text() or "") + "\n"
+                
+                satirlar = txt_all.split("\n")
+                for i, satir in enumerate(satirlar):
+                    satir_kucuk = satir.replace("I", "ı").replace("İ", "i").lower()
+                    for u in ["buğday", "mısır", "arpa", "çavdar", "tritikale", "bugday", "misir"]:
+                        if u in satir_kucuk:
+                            # İlgili kelimenin geçtiği satırın 1 üstü ve 5 altını alarak tabloyu tam yakala
+                            baglam = "\n".join(satirlar[max(0, i-1):i+6])
+                            
+                            # u'yu düzeltelim (misir -> mısır)
+                            ana_urun = u.replace("bugday", "buğday").replace("misir", "mısır")
+                            if ana_urun not in fiyatlar:
+                                fiyatlar[ana_urun] = []
+                            fiyatlar[ana_urun].append(baglam)
     except Exception:
         pass
+
     if not fiyatlar:
-        # fallback simulasyon
-        fiyatlar = {
-            "buğday": {"TMO_taban_fiyat_TL_kg": 9.85, "serbest_piyasa_TL_kg": 10.20, "bölge":"İç Anadolu"},
-            "mısır": {"TMO_taban_fiyat_TL_kg": 8.40, "serbest_piyasa_TL_kg": 8.90, "bölge":"İç Anadolu"},
-            "arpa": {"TMO_taban_fiyat_TL_kg": 7.60, "serbest_piyasa_TL_kg": 7.95, "bölge":"İç Anadolu"},
-        }
-        _cache_yaz("tmo_genel", "fiyatlar", {"fiyatlar": fiyatlar, "tarih": datetime.date.today().isoformat()})
-        return f"[TMO SIMÜLASYON ⚠️] PDF erişilemedi, statik fiyatlar döndü:\n{json.dumps(fiyatlar, ensure_ascii=False, indent=2)}"
+        return "[TMO BÜLTENİ ⚠️] PDF okunamadı veya güncel fiyat verisi bulunamadı. Fiyatın TMO tarafından henüz açıklanmadığını varsayabilirsiniz."
     
     _cache_yaz("tmo_genel", "fiyatlar", {"fiyatlar": fiyatlar, "tarih": datetime.date.today().isoformat()})
     
-    ilgili = {k: v for k, v in fiyatlar.items() if (sehir is None or sehir in k.lower()) and (urun is None or urun in k.lower())}
+    ilgili = {k: v for k, v in fiyatlar.items() if (urun is None or urun in k.lower())}
     if not ilgili:
-        ilgili = {k: v for k, v in fiyatlar.items() if (urun is None or urun in k.lower())} # Şehir bulunamazsa sadece ürüne göre filtrele
+        ilgili = fiyatlar # Filtre uyuşmazsa hepsini döndür
         
-    return f"[TMO PDF ✅] TMO fiyatları:\n{json.dumps(ilgili, ensure_ascii=False, indent=2)}"
+    return f"[TMO PDF ✅] Güncel TMO Fiyat Bağlamları (Lütfen TL/TON veya Piyasa Fiyatı satırlarına dikkat edin):\n{json.dumps(ilgili, ensure_ascii=False, indent=2)}"
 
 # ----------------------------------------------------------------------
 # 4️⃣ RAG – Tarım rehberi araması
