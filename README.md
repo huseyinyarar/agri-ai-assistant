@@ -30,7 +30,7 @@ Aşağıdaki görselde, Agri-AI sisteminin kullanıcı dostu web arayüzünü ve
 
 ---
 
-## ⚙️ Kurulum ve Çalıştırma (Hocalar ve Geliştiriciler İçin)
+## ⚙️ Kurulum ve Çalıştırma 
 
 Projenin tüm özellikleri API destekli olduğu için kendi lokal bilgisayarınızda kolayca çalıştırabilirsiniz.
 
@@ -41,7 +41,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. API Anahtarlarını Ayarlayın
-Projenin çalışması için `.env` dosyasındaki ortam değişkenlerini doldurmalısınız. Güvenlik nedeniyle `.env` dosyası repoda bulunmamaktadır (veya private repoda paylaşılmıştır).
+Projenin çalışması için `.env` dosyasındaki ortam değişkenlerini doldurmalısınız. Güvenlik nedeniyle `.env` dosyası repoda bulunmamaktadır.
 
 Bir `.env` dosyası oluşturun ve aşağıdaki formatta kendi API anahtarlarınızı girin:
 ```env
