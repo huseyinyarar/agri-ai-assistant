@@ -26,7 +26,8 @@ Projenin çıktılarını ve ajanların arka plandaki çalışma (düşünce) s�
 ### Sistem Arayüzü ve Nihai Reçete Çıktısı
 Aşağıdaki görselde, Agri-AI sisteminin kullanıcı dostu web arayüzünü ve arka planda ajanların ürettiği otonom Ziraat Mühendisi Reçetesini görebilirsiniz:
 
-![Agri-AI Arayuz ve Recete](arayuz.png)
+<img width="683" height="882" alt="örnek" src="https://github.com/user-attachments/assets/afa6acc0-ef70-4b22-bf33-0b69b51c7c68" />
+
 
 ---
 
