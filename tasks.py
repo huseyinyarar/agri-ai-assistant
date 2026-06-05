@@ -1,6 +1,6 @@
 # tasks.py
 """
-AgroAskAI v3.0 – Görev Tanımları (Multi-Tenant Hafıza Desteği)
+agri-ai-assistant v3.0 – Görev Tanımları (Multi-Tenant Hafıza Desteği)
 """
 
 from crewai import Task
@@ -124,13 +124,17 @@ def gorevleri_olustur(soru: str, konum: str = "", ekili_urunler: list | None = N
             "X dekarlık tarlanız için bölgenin ortalama rekoltesi (örn: 400kg/dekar) baz alındığında, merkez borsalara "
             "uzaklığınızdan kaynaklı tahmini nakliye fireleri düşüldüğünde X TL kâr/zarar etme "
             "riskiniz bulunmaktadır.'\n"
-            "7. Net Kâr >0 → 'SAT', =0 → 'BEKLE', <0 → 'EKME' tavsiyesi ver.\n"
+            "7. FENOLOJİK EVRE KURALI (ZORUNLU): Kullanıcının mesajından bitkinin tarladaki durumunu "
+            "(yeni ekilmiş, büyüme evresinde veya hasat edilmiş) mutlaka analiz et. "
+            "Kullanıcı 'yeni ektim', 'gübre atıyorum' veya 'suluyorum' gibi işlemlerden bahsediyorsa, "
+            "ASLA 'SAT' veya 'BEKLE' gibi hasat sonrası ticari komutlar VERME. "
+            "Sadece 'Hasat dönemi için öngörülen tahmini kâr projeksiyonunuz X TL'dir' diyerek vizyon çiz.\n"
             "8. Çıktı: Ulusal baz fiyat, revize yerel fiyat, tahmini/varsayılan rekolte, "
             "tarla büyüklüğü, toplam maliyet, net kâr ve tavsiye."
         ),
         expected_output=(
             "Ulusal baz fiyat, nakliye firesi düşülmüş revize yerel fiyat, tahmini rekolte, "
-            "toplam maliyet, net kâr projeksiyonu ve alış‑satış tavsiyesi."
+            "toplam maliyet, net kâr projeksiyonu ve fenolojik evreye uygun tavsiye."
         ),
         agent=ajanlar["finans"],
     )
@@ -161,7 +165,7 @@ def gorevleri_olustur(soru: str, konum: str = "", ekili_urunler: list | None = N
             "NDVI bitki sağlığı bilgisi, varsa hastalık riski]\n"
             "🌦️ HAVA: [Bu hafta tarla operasyonları için en güvenli günler, don/yağış riski]\n"
             "💰 FİNANS & PİYASA: [Nakliye firesi düşülmüş revize yerel fiyat, (Eski+Yeni kümülatif maliyet) analizi, "
-            "varsayılan rekolte üzerinden net kâr/zarar projeksiyonu ve SAT/BEKLE/EKME tavsiyesi]\n"
+            "varsayılan rekolte üzerinden net kâr/zarar projeksiyonu ve fenolojik evreye uygun vizyon/tavsiye]\n"
             "✅ AKSİYON: [Hemen yapılması gereken 2 somut, eyleme dönüştürülebilir adım]\n\n"
             "TOPLAM 5‑7 CÜMLE. Kısa, net, mobil‑okunabilir."
         ),

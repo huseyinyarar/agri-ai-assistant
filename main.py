@@ -1,6 +1,6 @@
 """
 ============================================================
-AgroAskAI v3.0 - Komut Satırı Çalıştırma Modülü (main.py)
+agri-ai-assistant v3.0 - Komut Satırı Çalıştırma Modülü (main.py)
 ============================================================
 Kullanıcıdan şehir ve soru alır, 4 ajanı sırayla çalıştırır
 ve kısa "Ziraat Mühendisi Reçetesi" çıktısını ekrana basar.
@@ -24,7 +24,7 @@ def ana_dongu():
 
     print()
     print("=" * 62)
-    print("  🌾 AgroAskAI v3.0 — Otonom Tarım Asistanı")
+    print("  🌾 agri-ai-assistant v3.0 — Otonom Tarım Asistanı")
     print("=" * 62)
     print(f"  Profil Şehri : {DEFAULT_CITY}")
     print(f"  Başlangıç    : {datetime.datetime.now().strftime('%d.%m.%Y %H:%M')}")
@@ -106,7 +106,7 @@ def ana_dongu():
 
     for deneme in range(1, MAX_DENEME + 1):
         try:
-            print(f"[AgroAskAI] Deneme {deneme}/{MAX_DENEME} başlıyor...")
+            print(f"[agri-ai-assistant] Deneme {deneme}/{MAX_DENEME} başlıyor...")
             sonuc = crew.kickoff()
             break
 
@@ -122,7 +122,7 @@ def ana_dongu():
                     bekleme_sure = int(m.group(1)) + 5
 
                 tur = "503 Sunucu Meşgul" if kod_503 else "429 Kota Aşımı"
-                print(f"[AgroAskAI] {tur} — {bekleme_sure}sn bekleniyor... (Deneme {deneme}/{MAX_DENEME})")
+                print(f"[agri-ai-assistant] {tur} — {bekleme_sure}sn bekleniyor... (Deneme {deneme}/{MAX_DENEME})")
                 time.sleep(bekleme_sure)
                 bekleme_sure = min(bekleme_sure * 2, 120)
             else:

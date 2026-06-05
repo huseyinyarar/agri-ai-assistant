@@ -1,19 +1,35 @@
 {
   "kullanici_id": "test_ciftci",
   "kayit_tarihi": "2026-05-22",
-  "konum": "Konya",
+  "konum": "Karaman, Merkez, Sudurağı Kasabası",
   "mevcut_urun": "bugday",
-  "son_soru": "Konya da bugday ilaclama",
-  "son_tavsiye_ozeti": "Toprak nemi yeterli",
-  "son_islem_tarihi": "2026-05-22 17:36",
+  "son_soru": "Bitki diz boyuna geldi, azotlu üst gübrelemesini yaptım. Sadece güncel gübre masrafımı girdim, dünkü tohum ve mazot masraflarımla toplayıp bana şu anki toplam zarar/maliyet durumumu söyler misin? Gübrenin erimesi için yarın Karaman'da nem durumu nasıl?",
+  "son_tavsiye_ozeti": "🌾 Karaman, Merkez, Sudurağı Kasabası | 06 Haziran 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: NASA verilerine göre tarlanızda toprak nemi %35 seviyesinde; 7 Haziran'da %80'e yükselecek nem, diz b",
+  "son_islem_tarihi": "2026-06-05 18:37",
   "finansal_bakiye": 0.0,
-  "toplam_maliyet": 0.0,
+  "toplam_maliyet": 32000.0,
   "toplam_gelir": 0.0,
   "gecmis_sorular": [
     {
       "tarih": "2026-05-22 17:36",
       "soru": "Konya da bugday ilaclama",
       "ozet": "Toprak nemi yeterli"
+    },
+    {
+      "tarih": "2026-06-05 18:28",
+      "soru": "Havalar ısındı, ekimi bitirdim. Mazot ve tohum için 20.000 TL masrafımı panele girdim, hesabımı başlat. Mısır suyu çok sever, önümüzdeki 5 gün yağış var mı? Yoksa damlama sulama sistemlerini hemen kurup çalıştırmaya başlayayım mı?",
+      "ozet": "🌾 Karaman, Merkez, Sudurağı Kasabası | 05 Haziran 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: Tarlanızdaki NDVI değeri 0.414 ile kritik düşük sev"
+    },
+    {
+      "tarih": "2026-06-05 18:37",
+      "soru": "Bitki diz boyuna geldi, azotlu üst gübrelemesini yaptım. Sadece güncel gübre masrafımı girdim, dünkü tohum ve mazot masraflarımla toplayıp bana şu anki toplam zarar/maliyet durumumu söyler misin? Gübrenin erimesi için yarın Karaman'da nem durumu nasıl?",
+      "ozet": "🌾 Karaman, Merkez, Sudurağı Kasabası | 06 Haziran 2026\n━━━━━━━━━━━━━━━━━━━━━━━━\n🌡️ İKLİM & TOPRAK: NASA verilerine göre tarlanızda toprak nemi %35 sev"
+    }
+  ],
+  "ekili_urunler": [
+    {
+      "urun_adi": "Mısır",
+      "dekar": 50
     }
   ]
 }

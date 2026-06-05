@@ -1,6 +1,6 @@
 # app.py
 """
-AgroAskAI v3.0 – Flask Web Sunucusu (Multi-Tenant Hafıza + APScheduler)
+agri-ai-assistant v3.0 – Flask Web Sunucusu (Multi-Tenant Hafıza + APScheduler)
 """
 
 import os, time, datetime, logging
@@ -21,7 +21,14 @@ profil_klasoru_hazirla()
 
 # ----------------------------------------------------------------------
 # Logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+logging.basicConfig(
+    level=logging.INFO, 
+    format="%(asctime)s %(levelname)s %(message)s",
+    handlers=[
+        logging.FileHandler("app_error.log", encoding="utf-8"),
+        logging.StreamHandler()
+    ]
+)
 
 # ----------------------------------------------------------------------
 # APScheduler – her sabah 10:00'da TMO scraping + RAG güncelle (Borsa/TMO verilerinin güncel olması için saat yükseltildi)
@@ -92,7 +99,7 @@ def analyze():
     kullanici_profili = profil_oku(kullanici_id)
 
     logging.info("\n" + "="*60)
-    logging.info("[AgroAskAI] Yeni analiz isteği")
+    logging.info("[agri-ai-assistant] Yeni analiz isteği")
     logging.info(f"  Kullanıcı: {kullanici_id}")
     logging.info(f"  Soru   : {soru}")
     logging.info(f"  Konum  : {hedef_sehir}")
@@ -119,30 +126,30 @@ def analyze():
         )
 
         # ---- Retry mekanizması (503/429) ----
-        MAX_DENEME   = 4
-        bekleme_sure = 3
+        MAX_DENEME   = 6
+        bekleme_sure = 10
         baslangic    = time.time()
         sonuc        = None
 
         for deneme in range(1, MAX_DENEME + 1):
             try:
-                logging.info(f"[AgroAskAI] 🚀 Deneme {deneme}/{MAX_DENEME} başlıyor...")
+                logging.info(f"[agri-ai-assistant] 🚀 Deneme {deneme}/{MAX_DENEME} başlıyor...")
                 sonuc = crew.kickoff()
                 break
             except Exception as hata:
                 txt = str(hata)
                 kod_503 = "503" in txt or "UNAVAILABLE" in txt
-                kod_429 = "429" in txt or "RESOURCE_EXHAUSTED" in txt or "RateLimitError" in txt
+                kod_429 = "429" in txt or "RESOURCE_EXHAUSTED" in txt or "RateLimitError" in txt or "quota" in txt.lower()
                 if (kod_503 or kod_429) and deneme < MAX_DENEME:
                     tur = "503 Sunucu Meşgul" if kod_503 else "429 Kota Aşımı"
-                    logging.warning(f"[AgroAskAI] {tur} – {bekleme_sure}s bekleniyor…")
+                    logging.warning(f"[agri-ai-assistant] {tur} – {int(bekleme_sure)}s bekleniyor…")
                     time.sleep(bekleme_sure)
-                    bekleme_sure = min(bekleme_sure * 2, 15)
+                    bekleme_sure = min(bekleme_sure * 1.5, 30)
                 else:
                     raise
 
         sure = round(time.time() - baslangic, 1)
-        logging.info(f"\n[AgroAskAI] ✅ Analiz tamamlandı! Süre: {sure}s\n")
+        logging.info(f"\n[agri-ai-assistant] ✅ Analiz tamamlandı! Süre: {sure}s\n")
 
         # Çıktıyı temizle (Thought / markdown kalıntıları)
         recete = str(sonuc)
@@ -178,7 +185,7 @@ def analyze():
         })
     except Exception as e:
         err = str(e)
-        logging.error(f"[AgroAskAI] ❌ Kalıcı hata: {err}")
+        logging.error(f"[agri-ai-assistant] ❌ Kalıcı hata: {err}")
         if "503" in err or "UNAVAILABLE" in err:
             mesaj = "Google AI sunucuları yoğun, lütfen 1‑2 dk sonra tekrar deneyin."
         elif "429" in err or "quota" in err.lower():

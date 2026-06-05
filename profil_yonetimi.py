@@ -1,6 +1,6 @@
 # profil_yonetimi.py
 """
-AgroAskAI v3.0 – Çok Kiracılı (Multi-Tenant) Profil Yönetimi
+agri-ai-assistant v3.0 – Çok Kiracılı (Multi-Tenant) Profil Yönetimi
 =============================================================
 Her çiftçi için ./profiller/{kullanici_id}.json dosyası oluşturur,
 okur ve günceller. Long-Term Memory katmanını oluşturur.

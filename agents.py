@@ -1,6 +1,6 @@
 # agents.py
 """
-AgroAskAI v3.0 – Ajan Fabrikası
+agri-ai-assistant v3.0 – Ajan Fabrikası
 """
 
 import os
@@ -159,7 +159,12 @@ def finans_ajani_olustur() -> Agent:
             "ortalama rekoltesi (örn: 400kg/dekar) baz alındığında, merkez borsalara "
             "uzaklığınızdan kaynaklı tahmini nakliye fireleri düşüldüğünde "
             "X TL kâr/zarar etme riskiniz bulunmaktadır.'\n"
-            "Net kâr > 0 ise 'SAT', =0 ise 'BEKLE', <0 ise 'EKME' tavsiyesini ver."
+            "FENOLOJİK EVRE KURALI (ZORUNLU): Kullanıcının mesajından bitkinin tarladaki durumunu "
+            "(yeni ekilmiş, büyüme evresinde veya hasat edilmiş) mutlaka analiz et. "
+            "Kullanıcı 'yeni ektim', 'gübre atıyorum' veya 'suluyorum' gibi büyüme evresine ait işlemlerden bahsediyorsa, "
+            "ASLA 'SAT' veya 'BEKLE' gibi hasat sonrası ticari komutlar VERME. "
+            "Sadece 'Hasat dönemi için öngörülen tahmini kâr projeksiyonunuz X TL'dir' diyerek geleceğe yönelik bir vizyon çiz. "
+            "Eğer hasat edilmiş bir ürün varsa, Net kâr > 0 ise 'SAT', =0 ise 'BEKLE', <0 ise 'EKME' tavsiyesini ver."
         ),
         backstory=(
             "Tarım ekonomisti ve lojistik analistisin. Dinamik ürün ve maliyet "

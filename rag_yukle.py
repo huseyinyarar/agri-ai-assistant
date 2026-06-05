@@ -143,6 +143,6 @@ def yukle_ve_guncelle():
 
 if __name__ == "__main__":
     print("-" * 60)
-    print("AgroAskAI - RAG Yukleyici [VISION / OCR DESTEKLI]")
+    print("agri-ai-assistant - RAG Yukleyici [VISION / OCR DESTEKLI]")
     print("-" * 60)
     yukle_ve_guncelle()

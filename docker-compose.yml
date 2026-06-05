@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  agroaskai:
+  agri-ai-assistant:
     build: .
     container_name: agroask_asistan
     env_file:

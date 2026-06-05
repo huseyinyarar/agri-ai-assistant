@@ -1,4 +1,4 @@
-# AgroAskAI v2.0 - Bağımlılıklar
+# agri-ai-assistant v2.0 - Bağımlılıklar
 
 # ─── Çekirdek Framework ─────────────────────────────────────
 crewai>=0.80.0

@@ -1,6 +1,6 @@
 # tools.py
 """
-AgroAskAI v3.0 – Araçlar (API entegrasyonları, önbellek, RAG, scraping)
+agri-ai-assistant v3.0 – Araçlar (API entegrasyonları, önbellek, RAG, scraping)
 """
 
 import os, json, time, datetime, requests
@@ -116,7 +116,7 @@ def fetch_nasa_power_history_tool(adres: str) -> str:
         "start": baslangic_yil,
         "end": bitis_yil,
         "format": "JSON",
-        "user": "agroaskai",
+        "user": "agriai",
     }
     try:
         params = {**ortak, "parameters": "T2M,PRECTOTCORR,GWETPROF,GWETTOP", "community": "AG"}
@@ -209,16 +209,21 @@ def fetch_live_weather_forecast_tool(adres: str) -> str:
 @tool("fetch_tmo_pdf_rag_tool")
 def fetch_tmo_pdf_rag_tool(sorgu: str) -> str:
     """TMO PDF bülteninden güncel ürün fiyatlarını okur."""
-    # cache kontrol
     cache = _cacheden_oku("tmo_genel", "fiyatlar")
+    
+    # Şehir ve ürün belirleme
+    sehirler = ["afyonkarahisar","konya","ankara","aksaray","eskişehir","kırşehir","nevşehir","niğde","kayseri","sivas","karaman","adana","mersin","mardin","diyarbakır"]
+    sehir = next((s for s in sehirler if s in sorgu.lower()), None)
+    urun = next((u for u in ["buğday","mısır","arpa","çavdar","yulaf"] if u in sorgu.lower()), None)
+
     if cache:
-        sehir = next((s for s in ["afyonkarahisar","konya","ankara","aksaray",
-                      "eskişehir","kırşehir","nevşehir","niğde","kayseri","sivas"] if s in sorgu.lower()), None)
-        urun = next((u for u in ["buğday","mısır","arpa"] if u in sorgu.lower()), "buğday")
         ilgili = {k: v for k, v in cache["fiyatlar"].items()
-                  if (sehir is None or sehir in k.lower()) and urun in k.lower()}
-        if ilgili:
-            return f"[CACHE HIT ✅] TMO fiyatları (sorgu: '{sorgu}'):\n{json.dumps(ilgili, ensure_ascii=False, indent=2)}"
+                  if (sehir is None or sehir in k.lower()) and (urun is None or urun in k.lower())}
+        if not ilgili:
+            ilgili = {k: v for k, v in cache["fiyatlar"].items()
+                      if (urun is None or urun in k.lower())}
+        return f"[CACHE HIT ✅] TMO fiyatları:\n{json.dumps(ilgili, ensure_ascii=False, indent=2)}"
+
     # gerçek PDF çekme
     TMO_PDF_URL = os.getenv(
         "TMO_PDF_URL",
@@ -226,7 +231,7 @@ def fetch_tmo_pdf_rag_tool(sorgu: str) -> str:
     )
     pdf_path = CACHE_DIR / "tmo_bugun.pdf"
     try:
-        r = requests.get(TMO_PDF_URL, headers={"User-Agent":"Mozilla/5.0 AgroAskAI-Bot/1.0"}, timeout=20, verify=False)
+        r = requests.get(TMO_PDF_URL, headers={"User-Agent":"Mozilla/5.0 agri-ai-assistant-Bot/1.0"}, timeout=20, verify=False)
         if r.status_code == 200 and "pdf" in r.headers.get("Content-Type", ""):
             pdf_path.write_bytes(r.content)
     except Exception:
@@ -239,8 +244,8 @@ def fetch_tmo_pdf_rag_tool(sorgu: str) -> str:
                 for sayfa in pdf.pages:
                     txt = sayfa.extract_text() or ""
                     for satir in txt.split("\n"):
-                        for urun in ["Buğday","Mısır","Arpa","Çavdar","Tritikale"]:
-                            if urun.lower() in satir.lower():
+                        for u in ["Buğday","Mısır","Arpa","Çavdar","Tritikale"]:
+                            if u.lower() in satir.lower():
                                 fiyatlar[satir.strip()] = {"ham_satir": satir.strip(), "sayfa": sayfa.page_number}
     except Exception:
         pass
@@ -253,8 +258,14 @@ def fetch_tmo_pdf_rag_tool(sorgu: str) -> str:
         }
         _cache_yaz("tmo_genel", "fiyatlar", {"fiyatlar": fiyatlar, "tarih": datetime.date.today().isoformat()})
         return f"[TMO SIMÜLASYON ⚠️] PDF erişilemedi, statik fiyatlar döndü:\n{json.dumps(fiyatlar, ensure_ascii=False, indent=2)}"
+    
     _cache_yaz("tmo_genel", "fiyatlar", {"fiyatlar": fiyatlar, "tarih": datetime.date.today().isoformat()})
-    return f"[TMO PDF ✅] {len(fiyatlar)} fiyat kaydı okundu."
+    
+    ilgili = {k: v for k, v in fiyatlar.items() if (sehir is None or sehir in k.lower()) and (urun is None or urun in k.lower())}
+    if not ilgili:
+        ilgili = {k: v for k, v in fiyatlar.items() if (urun is None or urun in k.lower())} # Şehir bulunamazsa sadece ürüne göre filtrele
+        
+    return f"[TMO PDF ✅] TMO fiyatları:\n{json.dumps(ilgili, ensure_ascii=False, indent=2)}"
 
 # ----------------------------------------------------------------------
 # 4️⃣ RAG – Tarım rehberi araması
