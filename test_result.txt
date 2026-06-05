@@ -1,9 +1,0 @@
-Thought: I have synthesized the information from the three agents, focusing on the current growth stage (dane dolum), soil moisture, NDVI, and upcoming weather. I will formulate a 5-7 sentence prescription covering irrigation and fertilization, adhering to the persona of a 15-year experienced Ziraat Mühendisi. I will ensure the language is professional and actionable for the farmer.
-
-Here's the plan:
-1.  Acknowledge the current growth stage (dane dolum) and moderate plant health (NDVI).
-2.  Incorporate the upcoming significant rainfall on June 6th and its implications for soil moisture.
-3.  Provide specific irrigation advice based on the rainfall and subsequent dry days, emphasizing rain-fed irrigation and avoiding overwatering.
-4.  Address fertilization, specifically the second nitrogen application, linking it to the NDVI and suggesting split application via irrigation.
-5.  Mention suitable application windows, avoiding the heavy rain day.
-6.  Conclude with a professional recommendation for detailed analysis.Sayın çiftçim, Konya'daki buğday tarlanızda dane dolum döneminde olduğunuzu ve mevcut NDVI değerinin (0.616) bitki sağlığının orta düzeyde olduğunu gözlemliyoruz. Bu hafta, özellikle 6 Haziran'da beklenen 6.78 mm'lik yağış, toprak nemine önemli katkı sağlayacaktır. Yağış sonrası toprak nemini kontrol ederek, bitkinin su ihtiyacına göre dane dolum döneminde yağmurlama sulama yapmanız faydalı olacaktır; özellikle 7-8 Haziran'da yağışsız günler sulama için uygun olabilir. Bitki gelişimini yakından takip ederek, ihtiyaca göre ikinci azotlu gübrelemeyi yağmurlama sistemiyle parçalar halinde uygulamanız, yatmaları önleyerek verimi artırabilir. Gübreleme için 6 Haziran dışındaki günler uygun olup, fazla ve dengesiz gübrelemeden kaçınınız. Unutmayın, en doğru kararlar için detaylı toprak analizi ve çeşide özel bir ziraat mühendisi planlaması esastır.

@@ -21,10 +21,7 @@ logs/
 
 # Veritabanı ve Dinamik Önbellek Dosyaları (Github'a yüklenmemeli)
 chroma_db/
-profiller/
 cache/
-tarim_rehberleri/
-proje için kaynaklar/
 
 # Rapor Müsveddeleri ve Geçici Dosyalar
 hata_mesajlari.txt
